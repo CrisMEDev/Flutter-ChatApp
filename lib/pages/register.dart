@@ -18,7 +18,7 @@ class RegisterPage extends StatelessWidget {
 
         body: Stack(
           children: [
-            HeaderPicoAfuera( color: Color(0xFF0D8B5E) ),
+            HeaderCurvoAfuera( color: Color(0xFF0D8B5E) ),
             HeaderLogo( titulo: 'Registrar', ),
             SingleChildScrollView(
               padding: EdgeInsets.only( top: screenSize.height * 0.4 ),

@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
 
         body: Stack(
           children: [
-            HeaderPicoAfuera( color: Color(0xFF0D8B5E) ),
+            HeaderCurvoAfuera( color: Color(0xFF0D8B5E) ),
             HeaderLogo( titulo: 'Messenger' ),
             SingleChildScrollView(
               padding: EdgeInsets.only( top: screenSize.height * 0.4 ),
