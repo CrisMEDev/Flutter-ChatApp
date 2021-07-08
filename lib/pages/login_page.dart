@@ -12,7 +12,6 @@ class LoginPage extends StatelessWidget {
 
     return SafeArea(
 
-      // TODO: Resolver el inconveniente del resize cuando se activa el teclado
       child: Scaffold(
 
         backgroundColor: Colors.grey[100],
