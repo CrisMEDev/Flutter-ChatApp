@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
 
       initialRoute: 'login',
 
-      routes: appRoutes
+      routes: appRoutes,
 
     );
   }

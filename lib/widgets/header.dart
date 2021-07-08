@@ -13,13 +13,16 @@ class HeaderPicoAfuera extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final screenSize = MediaQuery.of(context).size;
-
-    return Container(
-      width: screenSize.width,
-      height: screenSize.height,
-
-      child: CustomPaint(
-        painter: _HeaderPicoAfueraPainter(this.color),
+    
+    return SingleChildScrollView( // Se agrego este widget pra evitar el resize cuando aparece el teclado al pulsar un textField
+      physics: NeverScrollableScrollPhysics(),
+      child: Container(
+        width: screenSize.width,
+        height: screenSize.height,
+    
+        child: CustomPaint(
+          painter: _HeaderPicoAfueraPainter(this.color),
+        ),
       ),
     );
   }
@@ -33,6 +36,7 @@ class _HeaderPicoAfueraPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+
     final paint = new Paint();
     final path = new Path();
 

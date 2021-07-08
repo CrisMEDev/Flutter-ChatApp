@@ -26,26 +26,18 @@ class CustomInput extends StatelessWidget {
       padding: EdgeInsets.only( right: (screenSize.width * 0.08) * 0.5 ),
       margin: EdgeInsets.only( bottom: (screenSize.width * 0.08) * 0.55 ),
 
-      child: Theme(
-        child: TextField(
-          autocorrect: false,
-          keyboardType: this.keyboardType,
-          cursorColor: Colors.teal,
-          obscureText: this.obscureText,
-          controller: this.textController,
+      child: TextField(
+        autocorrect: false,
+        keyboardType: this.keyboardType,
+        cursorColor: Colors.teal,
+        obscureText: this.obscureText,
+        controller: this.textController,
       
-          decoration: InputDecoration(
-            prefixIcon: Icon( this.icon, color: Colors.teal, ),
-            focusedBorder: InputBorder.none,
-            border: InputBorder.none,
-            hintText: this.hintText,
-          )
-        ),
-
-        data: Theme.of(context).copyWith(
-          primaryIconTheme: IconThemeData(
-            color: Colors.red
-          )
+        decoration: InputDecoration(
+          prefixIcon: Icon( this.icon ),
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          hintText: this.hintText,
         )
       ),
 
