@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:chat_app/services/auth_service.dart';
 
 import 'package:chat_app/widgets/widgets.dart';
 
@@ -84,6 +87,7 @@ class __FormState extends State<_Form> {
   Widget build(BuildContext context) {
 
     final screenSize = MediaQuery.of(context).size;
+    final authService = Provider.of<AuthService>( context );
 
     return Container(
 
@@ -110,9 +114,12 @@ class __FormState extends State<_Form> {
           BotonVerde(
             text: 'Acceder',
 
-            funcionBoton: (){
-              print( emailController.text );
-              print( passController.text );
+            funcionBoton: authService.autenticando ? null : (){
+
+              // Cerrar el teclado despues de presionar el botón
+              FocusScope.of(context).unfocus();
+
+              authService.login( emailController.text.trim(), passController.text.trim() );
             },
           )
         ],

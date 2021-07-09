@@ -18,9 +18,9 @@ class _UsuariosPageState extends State<UsuariosPage> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   final List<Usuario> usuarios = [
-    Usuario( uid: '1', nombre: 'Cristian', email: 'test1@test.com', online: true ),
-    Usuario( uid: '2', nombre: 'Aurora', email: 'test2@test.com', online: true ),
-    Usuario( uid: '3', nombre: 'Jesús', email: 'test3@test.com', online: false ),
+    Usuario( uid: '1', name: 'Cristian', email: 'test1@test.com', online: true ),
+    Usuario( uid: '2', name: 'Aurora', email: 'test2@test.com', online: true ),
+    Usuario( uid: '3', name: 'Jesús', email: 'test3@test.com', online: false ),
   ];
 
   @override
@@ -108,10 +108,10 @@ class _UsuarioTile extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     return ListTile(
-      title: Text( usuario.nombre ),
+      title: Text( usuario.name ),
       subtitle: Text( usuario.email ),
       leading: CircleAvatar(
-        child: Text( usuario.nombre.substring(0, 2), style: TextStyle(color: Colors.black), ),
+        child: Text( usuario.name.substring(0, 2), style: TextStyle(color: Colors.black), ),
         backgroundColor: Color( 0xFF06BED8 ),
       ),
       trailing: Container(
