@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:chat_app/services/auth_service.dart';
 
+import 'package:chat_app/helpers/mostrar_alerta.dart';
 import 'package:chat_app/widgets/widgets.dart';
 
 
@@ -114,12 +115,19 @@ class __FormState extends State<_Form> {
           BotonVerde(
             text: 'Acceder',
 
-            funcionBoton: authService.autenticando ? null : (){
+            funcionBoton: authService.autenticando ? null : ()async{
 
               // Cerrar el teclado despues de presionar el botón
               FocusScope.of(context).unfocus();
 
-              authService.login( emailController.text.trim(), passController.text.trim() );
+              final loginOk = await authService.login( emailController.text.trim(), passController.text.trim() );
+
+              if ( loginOk ){
+                // TODO: Navegar a pantalla principal, conectar a sockets
+              } else{
+                // Mostrar alerta
+                mostrarAlerta(context, 'Credenciales incorrectas', 'El correo y/o la contraseña son incorrectos');
+              }
             },
           )
         ],
