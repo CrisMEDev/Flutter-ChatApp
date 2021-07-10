@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'package:chat_app/services/auth_service.dart';
+
 import 'package:chat_app/global/enviroments.dart';
 
 
@@ -18,7 +20,9 @@ class SocketService with ChangeNotifier{
   ServerStatus get serverStatus => this._serverStatus;
   IO.Socket get socket => this._socket;   // Ahora se pueden crear llamadas al on emit y off desde cualquier instancia de la clase
 
-  void connect(){
+  void connect() async {
+
+    final token = await AuthService.getToken();
 
     // Dart client
     this._socket = IO.io( Enviroment.socketUrl ,
@@ -26,6 +30,7 @@ class SocketService with ChangeNotifier{
           .setTransports(['websocket'])
           .enableAutoConnect()
           .enableForceNew()         // Para manejar y autenticar el inicio de sesión por sockets
+          .setExtraHeaders({ 'x-token': token })  // Envio del token para autenticar
           .build()
     );
 

@@ -57,8 +57,9 @@ class _UsuariosPageState extends State<UsuariosPage> {
             Container(
               margin: EdgeInsets.only( right: 10 ),
     
-              // child: Icon( Icons.offline_bolt_outlined ),
-              child: Icon( Icons.check_circle_outline, color: Colors.teal, ),
+              child: ( socketService.serverStatus == ServerStatus.Online )
+                      ? Icon( Icons.check_circle_outline, color: Colors.teal, )
+                      : Icon( Icons.offline_bolt_outlined, color: Colors.redAccent, ),
             )
           ],
         ),
