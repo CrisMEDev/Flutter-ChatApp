@@ -124,6 +124,7 @@ class __FormState extends State<_Form> {
 
               if ( loginOk ){
                 // TODO: Navegar a pantalla principal, conectar a sockets
+                Navigator.pushReplacementNamed(context, 'usuarios');
               } else{
                 // Mostrar alerta
                 mostrarAlerta(context, 'Credenciales incorrectas', 'El correo y/o la contraseña son incorrectos');
