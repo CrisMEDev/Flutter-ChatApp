@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app/services/socket_service.dart';
 
 
 class LoadingPage extends StatelessWidget {
@@ -10,11 +11,13 @@ class LoadingPage extends StatelessWidget {
   Future<void> checkLoginState( BuildContext context )async{
 
     final authService = Provider.of<AuthService>( context, listen: false );
+    final socketService = Provider.of<SocketService>( context, listen: false );
 
     final autenticado = await authService.isLoggedIn();
 
     if ( autenticado ){
-      // TODO: Conectar al socket server
+      // Conectar al socket server
+      socketService.connect();
 
       // Como este future es parte de un builder y estos se redibujan constantemente, se envuelve el
       // navigator en la siguiente instrucción para evitar perder el manejo en el context y esperar la renderización del builder

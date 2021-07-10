@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app/services/socket_service.dart';
+
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:chat_app/helpers/mostrar_alerta.dart';
 
@@ -89,6 +91,7 @@ class __FormState extends State<_Form> {
 
     final screenSize = MediaQuery.of(context).size;
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
 
@@ -133,7 +136,9 @@ class __FormState extends State<_Form> {
                 passController.text.trim());
               
               if ( registerOk ){
-                // TODO: Conectar a sockets
+                // Conectar al socket server
+                socketService.connect();
+
                 Navigator.pushReplacementNamed(context, 'usuarios');
               } else {
                 mostrarAlerta(context, 'Registro inválido', 'El correo y/o la contraseña con incorrectos, debe llenar todos los campos');
