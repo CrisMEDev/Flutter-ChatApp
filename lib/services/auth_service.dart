@@ -11,6 +11,8 @@ import 'package:chat_app/global/enviroments.dart';
 class AuthService with ChangeNotifier{
 
   late Usuario usuario;
+
+  // Variable para desactivar el boton de post y evitar sobrecarga de peticiones
   bool _autenticando = false;
 
   // Create storage
@@ -67,6 +69,41 @@ class AuthService with ChangeNotifier{
     }
 
 
+    this.autenticando = false;
+    return false;
+
+  }
+
+  Future<bool> register( String name, String email, String password )async{
+
+    this.autenticando = true;
+
+    final data = {
+      'name': name,
+      'email': email,
+      'password': password
+    };
+
+    final url = Uri.parse( '${ Enviroment.apiURL }/new/' );
+
+    final resp = await http.post( url, 
+      body: jsonEncode(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    );
+
+    print( resp.body );
+    if ( resp.statusCode == 201 ){
+      final loginResponse = loginResponseFromJson( resp.body );
+      this.usuario = loginResponse.usuario;
+
+      // Guardar token en lugar seguro
+      await this._guardarToken( loginResponse.token );
+
+      this.autenticando = false;
+      return true;
+    }
 
     this.autenticando = false;
     return false;

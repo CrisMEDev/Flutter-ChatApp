@@ -123,7 +123,7 @@ class __FormState extends State<_Form> {
               final loginOk = await authService.login( emailController.text.trim(), passController.text.trim() );
 
               if ( loginOk ){
-                // TODO: Navegar a pantalla principal, conectar a sockets
+                // TODO: Conectar a sockets
                 Navigator.pushReplacementNamed(context, 'usuarios');
               } else{
                 // Mostrar alerta

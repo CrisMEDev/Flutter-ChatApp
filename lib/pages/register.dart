@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/widgets.dart';
+import 'package:chat_app/helpers/mostrar_alerta.dart';
 
 
 class RegisterPage extends StatelessWidget {
@@ -85,6 +88,7 @@ class __FormState extends State<_Form> {
   Widget build(BuildContext context) {
 
     final screenSize = MediaQuery.of(context).size;
+    final authService = Provider.of<AuthService>(context);
 
     return Container(
 
@@ -118,9 +122,22 @@ class __FormState extends State<_Form> {
           BotonVerde(
             text: 'Registrar',
 
-            funcionBoton: (){
-              print( emailController.text );
-              print( passController.text );
+            funcionBoton: authService.autenticando ? null : ()async{
+
+              // Cerrar el teclado despues de presionar el botón
+              FocusScope.of(context).unfocus();
+
+              final registerOk = await authService.register(
+                nameController.text.trim(),
+                emailController.text.trim().toLowerCase(),
+                passController.text.trim());
+              
+              if ( registerOk ){
+                // TODO: Conectar a sockets
+                Navigator.pushReplacementNamed(context, 'usuarios');
+              } else {
+                mostrarAlerta(context, 'Registro inválido', 'El correo y/o la contraseña con incorrectos, debe llenar todos los campos');
+              }
             },
           )
         ],
