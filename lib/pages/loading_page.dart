@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chat_app/services/auth_service.dart';
@@ -15,13 +16,18 @@ class LoadingPage extends StatelessWidget {
     if ( autenticado ){
       // TODO: Conectar al socket server
 
-
-      Navigator.pushReplacementNamed(context, 'usuarios');
+      // Como este future es parte de un builder y estos se redibujan constantemente, se envuelve el
+      // navigator en la siguiente instrucción para evitar perder el manejo en el context y esperar la renderización del builder
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, 'usuarios');
+      });
 
       return;
     }
 
-    Navigator.pushReplacementNamed(context, 'login');
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      Navigator.pushReplacementNamed(context, 'login');
+    });
     return;
 
   }

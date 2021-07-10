@@ -114,6 +114,8 @@ class AuthService with ChangeNotifier{
 
     final String token = await getToken();
 
+    if ( token == 'No token in device' ) return false;
+
 
     final url = Uri.parse( '${ Enviroment.apiURL }/renew' );
 
