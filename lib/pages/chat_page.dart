@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/services/chat_service.dart';
+import 'package:chat_app/services/socket_service.dart';
 
 import 'package:chat_app/widgets/widgets.dart';
 
@@ -22,6 +24,18 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   final _focusNode = FocusNode();
 
   bool _estaEscribiendo = false;
+  late ChatService chatService;
+  late SocketService socketService;
+  late AuthService authService;
+
+  @override
+  void initState() {
+    this.chatService = Provider.of<ChatService>(context, listen: false);
+    this.socketService = Provider.of<SocketService>(context, listen: false);
+    this.authService = Provider.of<AuthService>(context, listen: false);
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -40,7 +54,6 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     final screenSize = MediaQuery.of(context).size;
-    final chatService = Provider.of<ChatService>(context);
 
     return SafeArea(
       child: Scaffold(
@@ -170,6 +183,13 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       newMessage.animationController.forward();
 
       _estaEscribiendo = false;
+    });
+
+    // Emitir mensaje al backend
+    this.socketService.socket.emit( 'mensaje-personal', {
+      'de': this.authService.usuario.uid,
+      'para': this.chatService.usuarioPara.uid,
+      'mensaje': text
     });
   }
 
