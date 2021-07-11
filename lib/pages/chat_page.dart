@@ -30,11 +30,32 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    this.chatService = Provider.of<ChatService>(context, listen: false);
+    this.chatService   = Provider.of<ChatService>(context, listen: false);
     this.socketService = Provider.of<SocketService>(context, listen: false);
-    this.authService = Provider.of<AuthService>(context, listen: false);
+    this.authService   = Provider.of<AuthService>(context, listen: false);
+
+    this.socketService.socket.on( 'mensaje-personal' , _escucharMensajePersonal );
 
     super.initState();
+  }
+
+  _escucharMensajePersonal( dynamic payload ){
+    
+    ChatMessage message = ChatMessage(
+      text: payload['mensaje'],
+      uid: payload['de'],
+      animationController: AnimationController(
+        vsync: this,
+        duration: Duration( milliseconds: 1000 )
+      ),
+    );
+
+    setState(() {
+      _messages.insert(0, message);
+    });
+
+    message.animationController.forward();
+
   }
 
   @override
@@ -46,7 +67,9 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       message.animationController.dispose();
     }
 
-    // TODO: Off del socket
+    // Al salir de la pantalla de cierto usuario se cierra el canal de comunicación, para no escuchar sus mensajes
+    // con el objetivo de evitar mayor consumo de datos
+    this.socketService.socket.off( 'mensaje-personal' );
     super.dispose();
   }
 
