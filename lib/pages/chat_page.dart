@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:chat_app/services/chat_service.dart';
 
 import 'package:chat_app/widgets/widgets.dart';
 
-final List<ChatMessage> _messages = [];
 
 class ChatPage extends StatefulWidget {
 
@@ -15,6 +17,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
+  final List<ChatMessage> _messages = [];
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
 
@@ -37,6 +40,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     final screenSize = MediaQuery.of(context).size;
+    final chatService = Provider.of<ChatService>(context);
 
     return SafeArea(
       child: Scaffold(
@@ -50,11 +54,11 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                child: Text('Lu', style: TextStyle( fontSize: 12 ),),
+                child: Text( chatService.usuarioPara.name.substring(0, 2).toUpperCase() , style: TextStyle( fontSize: 12 ),),
                 backgroundColor: Colors.teal,
               ),
               SizedBox( width: screenSize.width * 0.02, ),
-              Text( 'Luz Aurora', style: TextStyle( color: Colors.black54, fontSize: screenSize.width * 0.04 ), )
+              Text( chatService.usuarioPara.name, style: TextStyle( color: Colors.black54, fontSize: screenSize.width * 0.04 ), )
             ],
           ),
           backgroundColor: Colors.white,

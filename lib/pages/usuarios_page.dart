@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:chat_app/services/socket_service.dart';
+import 'package:chat_app/services/chat_service.dart';
 import 'package:chat_app/services/usuarios_service.dart';
 
 import 'package:chat_app/models/models.dart';
@@ -158,6 +157,13 @@ class _UsuarioTile extends StatelessWidget {
           shape: BoxShape.circle
         ),
       ),
+
+      onTap: (){
+        final chatService = Provider.of<ChatService>(context, listen: false);
+        chatService.usuarioPara = usuario;
+
+        Navigator.pushNamed(context, 'chat');
+      },
     );
   }
 }
