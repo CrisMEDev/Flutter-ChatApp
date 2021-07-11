@@ -1,8 +1,11 @@
-import 'package:chat_app/services/socket_service.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'package:chat_app/services/socket_service.dart';
+import 'package:chat_app/services/usuarios_service.dart';
 
 import 'package:chat_app/models/models.dart';
 import 'package:chat_app/services/auth_service.dart';
@@ -19,12 +22,21 @@ class UsuariosPage extends StatefulWidget {
 class _UsuariosPageState extends State<UsuariosPage> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final usuariosService = UsuariosService();
 
-  final List<Usuario> usuarios = [
-    Usuario( uid: '1', name: 'Cristian', email: 'test1@test.com', online: true ),
-    Usuario( uid: '2', name: 'Aurora', email: 'test2@test.com', online: true ),
-    Usuario( uid: '3', name: 'Jesús', email: 'test3@test.com', online: false ),
-  ];
+  List<Usuario> usuarios = [];
+
+  // final List<Usuario> usuarios = [
+  //   Usuario( uid: '1', name: 'Cristian', email: 'test1@test.com', online: true ),
+  //   Usuario( uid: '2', name: 'Aurora', email: 'test2@test.com', online: true ),
+  //   Usuario( uid: '3', name: 'Jesús', email: 'test3@test.com', online: false ),
+  // ];
+
+  @override
+  void initState() {
+    _cargarUsuarios();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +84,10 @@ class _UsuariosPageState extends State<UsuariosPage> {
             backgroundColor: Colors.teal,
           ),
 
-          onRefresh: _cargarUsuarios,
+          onRefresh: (){
+            setState(() {});
+            _cargarUsuarios();
+          },
           child: _UsersList(usuarios: usuarios)
         )
       ),
@@ -81,8 +96,13 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   _cargarUsuarios() async {
 
+    this.usuarios = await usuariosService.getUsuarios();
+
+    if ( this.mounted ) setState(() {});
+
     //monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    // await Future.delayed(Duration(milliseconds: 1000));
+
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
 

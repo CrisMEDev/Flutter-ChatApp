@@ -47,7 +47,7 @@ class AuthService with ChangeNotifier{
       'password': password
     };
 
-    final url = Uri.parse( '${ Enviroment.apiURL }' );
+    final url = Uri.parse( '${ Enviroment.apiURL }chat/auth' );
 
     final resp = await http.post( url, 
       body: jsonEncode(data),
@@ -84,7 +84,7 @@ class AuthService with ChangeNotifier{
       'password': password
     };
 
-    final url = Uri.parse( '${ Enviroment.apiURL }/new/' );
+    final url = Uri.parse( '${ Enviroment.apiURL }chat/auth/new' );
 
     final resp = await http.post( url, 
       body: jsonEncode(data),
@@ -117,7 +117,7 @@ class AuthService with ChangeNotifier{
     if ( token == 'No token in device' ) return false;
 
 
-    final url = Uri.parse( '${ Enviroment.apiURL }/renew' );
+    final url = Uri.parse( '${ Enviroment.apiURL }chat/auth/renew' );
 
     final resp = await http.get( url, headers: {
       'Content-Type': 'application/json',

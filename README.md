@@ -14,8 +14,8 @@ import 'dart:io';
 
 class Enviroment {
 
-  static String apiURL = Platform.isAndroid ? 'http://<MyIpAddress>:8080/api/chat/auth/'
-                                            : 'http://localhost:8080/api/chat/auth/';
+  static String apiURL = Platform.isAndroid ? 'http://<MyIpAddress>:8080/api/'
+                                            : 'http://localhost:8080/api/';
 
   static String socketUrl = Platform.isAndroid ? 'http://<MyIpAddress>:8080'
                                                : 'http://localhost:8080';
