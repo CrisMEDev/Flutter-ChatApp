@@ -1,8 +1,8 @@
-# Chat app
+# **Chat app**
 
 Aplicación de mensajería, simple y útil.
 
-### Configuraciones necesarias
+### **Configuraciones necesarias**
 
 * Crear el archivo enviroments.dart en el directorio /lib/global/ y asignar:
     * El string url para la conexión al backend
@@ -26,11 +26,20 @@ class Enviroment {
 **Nota:** Para desplegar en producción no olvidar cambiar ``` http://<MyIpAddress>:8080 y http://localhost:8080 ```
 por la url de conexión en la nube
 
+### **Enlace hacia el backend server**
 
-### Documentación
+[**Backend chat server**](https://github.com/CrisMEDev/Node-ChatApp_Server)
+
+### **Documentación**
 
 [Logo vector created by roserodionova - www.freepik.com](https://www.freepik.com/vectors/logo)
 
 [pull_to_refresh](https://pub.dev/packages/pull_to_refresh)
 
 [socket_io_client](https://pub.dev/packages/socket_io_client/versions/2.0.0-beta.4-nullsafety.0)
+
+[http](https://pub.dev/packages/http)
+
+[flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)
+
+[socket_io_client](https://pub.dev/packages/socket_io_client)
